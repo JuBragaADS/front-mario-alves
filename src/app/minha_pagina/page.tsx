@@ -5,7 +5,7 @@ import { formataData } from "@/utils/formataData";
 import { isToday } from "date-fns";
 import { Tooltip } from "react-tooltip";
 import { useUsuarioStore } from "@/context/usuario";
-import { EmprestimoI } from "@/types/emprestimo";
+import { EmprestimoI } from "@/utils/types/emprestimos";
 import { toast } from "sonner";
 
 type Reserva = {
@@ -106,7 +106,7 @@ export default function MinhaPagina() {
           setEmprestimos((emprestimos) =>
             emprestimos.map((e) =>
               e.id === emprestimo.id
-              ? { ...e, datadaEntrega: novaData.toISOString() }
+              ? { ...e, datadaEntrega: novaData }
               : e
             )
           );
@@ -122,11 +122,12 @@ export default function MinhaPagina() {
     }
   }
 
-  const textoTooltip = (emprestimo) => {
-    return {
+  const textoTooltip = (emprestimo: EmprestimoI) => {
+    const tooltipTexts: Record<string, string> = {
       'LOCADO': "Renovação disponível somente na data de entrega.",
       'RETORNADO': "Empréstimo já foi retornado."
-    }[emprestimo.status];
+    };
+    return tooltipTexts[emprestimo.status];
   }
 
   return (
@@ -158,7 +159,11 @@ export default function MinhaPagina() {
                 <p className="text-lg">👤 Usuário ID: {emprestimo.usuarioId}</p>
                 <p className="text-lg">
                   📅 Retirada:{" "}
-                  {formataData(emprestimo.datadaReserva.split("T")[0])}
+                  {formataData(
+                    typeof emprestimo.datadaReserva === "string"
+                      ? emprestimo.datadaReserva.split("T")[0]
+                      : emprestimo.datadaReserva.toISOString().split("T")[0]
+                  )}
                 </p>
                 <p className="text-lg">
                   📅 Entrega:{" "}
