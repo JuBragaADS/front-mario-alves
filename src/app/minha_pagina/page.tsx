@@ -123,11 +123,10 @@ export default function MinhaPagina() {
   }
 
   const textoTooltip = (emprestimo: EmprestimoI) => {
-    const tooltipTexts: Record<string, string> = {
+    return {
       'LOCADO': "Renovação disponível somente na data de entrega.",
       'RETORNADO': "Empréstimo já foi retornado."
-    };
-    return tooltipTexts[emprestimo.status];
+    }[emprestimo.status];
   }
 
   return (
@@ -159,11 +158,7 @@ export default function MinhaPagina() {
                 <p className="text-lg">👤 Usuário ID: {emprestimo.usuarioId}</p>
                 <p className="text-lg">
                   📅 Retirada:{" "}
-                  {formataData(
-                    typeof emprestimo.datadaReserva === "string"
-                      ? emprestimo.datadaReserva.split("T")[0]
-                      : emprestimo.datadaReserva.toISOString().split("T")[0]
-                  )}
+                  {formataData(String(emprestimo.datadaReserva).split("T")[0])}
                 </p>
                 <p className="text-lg">
                   📅 Entrega:{" "}
