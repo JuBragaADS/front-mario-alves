@@ -1,10 +1,10 @@
 'use client'
-import { useSearchParams} from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { useEffect, useState, Suspense } from 'react'
 import { ItemLivros } from "@/components/ItemLivros"
 import { LivroI } from '@/utils/types/livros'
 
-function ResultadoPesquisa() { 
+function ResultadoPesquisaClient() { 
     const [livrosEncontrados, setLivrosEncontrados] = useState<LivroI[]>([]);
     const searchParams = useSearchParams() 
     const termoPesquisa = searchParams.get('termo') 
@@ -38,4 +38,10 @@ function ResultadoPesquisa() {
 
 }
 
-export default ResultadoPesquisa
+export default function ResultadoPesquisa() {
+    return (
+        <Suspense>
+            <ResultadoPesquisaClient />
+        </Suspense>
+    )
+}
