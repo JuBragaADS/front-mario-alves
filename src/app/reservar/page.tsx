@@ -14,7 +14,9 @@ type Inputs = {
   titulo: string;
 };
 
-export default function Reservar() {
+import { Suspense } from "react";
+
+function ReservarComponent() {
   const { register, handleSubmit, setValue, control } = useForm<Inputs>();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -244,5 +246,14 @@ export default function Reservar() {
         </div>
       </div>
     </section>
+  );
+
+}
+
+export default function ReservarPage() {
+  return (
+    <Suspense>
+      <ReservarComponent />
+    </Suspense>
   );
 }
