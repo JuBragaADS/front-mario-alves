@@ -90,7 +90,7 @@ function ReservarComponent() {
           );
         }, 2000);
       } else {
-        alert("Erro... Verifique os dados preenchidos.");
+        alert("Erro... Faça login.");
       }
     } catch (error) {
       alert("Erro ao se comunicar com o servidor. Tente novamente.");
